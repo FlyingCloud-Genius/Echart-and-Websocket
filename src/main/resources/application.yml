@@ -1,0 +1,14 @@
+server:
+  port: 80
+
+logging:
+  level: debug
+  file:
+    path: /home/cloud/out.log
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    mode: HTML5
+    encoding: UTF-8
+    cache: false
