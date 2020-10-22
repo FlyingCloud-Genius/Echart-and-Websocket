@@ -1,6 +1,7 @@
 package org.example.demo.log;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -10,6 +11,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.InputStream;
 
 @Slf4j
+@Component
 @ServerEndpoint("/log")
 public class LogSocket {
 
@@ -20,10 +22,11 @@ public class LogSocket {
     @OnOpen
     public void onOpen(Session session) {
         try {
-            process = Runtime.getRuntime().exec("tail -100f /home/cloud/out.log");
+            process = Runtime.getRuntime().exec("tail -100f /home/cloud/out.log/spring.log");
             inputStream = process.getInputStream();
 
             TailLogThread thread = new TailLogThread(inputStream, session);
+            thread.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
