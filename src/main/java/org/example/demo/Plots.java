@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class Plots {
 
-    private List<Double> xAxis;
+    private List<Integer> xAxis;
 
-    private List<Double> yAxis;
+    private List<Integer> yAxis;
 }

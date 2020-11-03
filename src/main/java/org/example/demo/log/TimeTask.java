@@ -13,6 +13,6 @@ public class TimeTask {
     @Scheduled(fixedRate = 1000)
     public void printLog() {
         addOn++;
-        log.info("love you {} times", addOn);
+        log.info("love Lily {} times", addOn);
     }
 }

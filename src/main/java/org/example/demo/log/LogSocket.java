@@ -7,12 +7,13 @@ import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.InputStream;
 
 @Slf4j
 @Component
-@ServerEndpoint("/log")
+@ServerEndpoint("/log/{id}")
 public class LogSocket {
 
     private Process process;
@@ -20,7 +21,7 @@ public class LogSocket {
     private InputStream inputStream;
 
     @OnOpen
-    public void onOpen(Session session) {
+    public void onOpen(Session session, @PathParam("id") Long id) {
         try {
             process = Runtime.getRuntime().exec("tail -100f /home/cloud/out.log/spring.log");
             inputStream = process.getInputStream();
