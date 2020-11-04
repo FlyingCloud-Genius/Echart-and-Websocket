@@ -1,37 +1,49 @@
-<input type="file" name="file" id="fileId" />
-<input type="submit" name="btn" value="提交" id="btnId" οnclick="check()" />
-<div id="myShow"></div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>echo json</title>
+    <script src="../static/js/jquery.js"></script>
+</head>
+<body>
+<div id="inpuFile">
+    <input type="file" name="file" id="fileId" onchange="check()" />
+    <input type="submit" name="btn" value="提交" id="btnId" onclick="submit()" disabled="disabled"/>
+</div>
+<pre id="myShow"></pre>
 
 <script type="text/javascript">
     function check() {
-        console.log("in1-");
         var objFile = document.getElementById("fileId");
         if (objFile.value == "") {
             alert("不能空")
         }
 
-        //console.log(objFile.files[0].size); // 文件字节数
 
         var files = $('#fileId').prop('files');//获取到文件列表
         if (files.length == 0) {
             alert('请选择文件');
         } else {
-            console.log("in2-");
-            //debugger;
             var reader = new FileReader();//新建一个FileReader
             reader.readAsText(files[0], "UTF-8");//读取文件
             reader.onload = function (evt) { //读取完文件之后会回来这里
                 var fileString = evt.target.result; // 读取文件内容
-                if(fileString.search("devicePublickey")!=-1 && fileString.search(",")==-1 && fileString.search("\\[") && fileString.search("\\]")){
-                    console.log("in3-");
+                if(fileString.search("name") != -1 && fileString.search("age") != -1){
                     alert("正确");
+                    $("#btnId").removeAttr("disabled");
+                    $("#myShow").append(fileString);
                     return true;
                 }else{
-                    console.log("in4-");
                     alert("不符合要求");
+                    $("#btnId").attr("disabled", "disabled");
                 }
-                $("#myShow").append(fileString);
             }
         }
     }
+
+    function submit() {
+        alert("submit");
+    }
 </script>
+</body>
+</html>

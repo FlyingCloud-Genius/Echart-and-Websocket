@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts入门</title>
+    <script src="../static/js/echars.min.js"></script>
+    <script src="../static/js/jquery.js"></script>
+</head>
+<body>
+    <div id='main' style='width: 90%;height:400px;' align="center">
+
+    </div>
+    <script>
+        //简单的echarts
+        var myChart = echarts.init(document.getElementById('main'), "light");
+        function ajaxNew(){
+            //ajax请求用的是jQuery
+            $.ajax({
+                url: "http://localhost/plotting",
+                type: "GET",
+                dataType: "json",
+                success:function(data){
+                    console.log(JSON.stringify(data.xaxis));
+                    myChart.setOption({
+                        animation: true,
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                label: {
+                                    show: true,
+                                    formatter: '{value} iteration'
+                                }
+                            }
+                        },
+                        legend: {
+                            data: ["loss"]
+                        },
+                        xAxis: {
+                            name: "iteration",
+                            type: "category",
+                            data: data.xaxis,
+                            axisLabel: {
+                                formatter: '{value} iteration'
+                            }
+                        },
+                        yAxis: {
+                            name: "loss value"
+                        },
+                        series: [{
+                            name: "loss",
+                            data: data.yaxis,
+                            smooth: true,
+                            type: 'line'
+                        }]
+                    });
+                }
+            })
+        };
+
+        $(document).ready(function() {
+            ajaxNew();
+            window.setInterval(ajaxNew, 10000);
+        });
+    </script>
+</body>
+</html>

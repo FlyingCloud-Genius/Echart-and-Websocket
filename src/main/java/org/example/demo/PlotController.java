@@ -1,5 +1,6 @@
 package org.example.demo;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class PlotController {
 
@@ -48,6 +50,7 @@ public class PlotController {
     @GetMapping("/plotting")
     public Plots plotting() {
         index++;
+        log.info("plotting {} time...", index);
         return new Plots() {{
             setXAxis(xList.subList(index, index + 5));
             setYAxis(yList.subList(index, index + 5));
