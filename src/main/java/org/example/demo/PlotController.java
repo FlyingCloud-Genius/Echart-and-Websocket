@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @Controller
@@ -15,30 +16,18 @@ public class PlotController {
 
     private static int index = -1;
 
+    private Random random = new Random();
+
     private List<Integer> yList = new ArrayList<Integer>() {{
-        add(800);
-        add(400);
-        add(200);
-        add(100);
-        add(50);
-        add(25);
-        add(12);
-        add(6);
-        add(3);
-        add(1);
+        for (int i = 100000; i > 0; i--) {
+            add(random.nextInt(100000));
+        }
     }};
 
     private List<Integer> xList = new ArrayList<Integer>() {{
-        add(100);
-        add(200);
-        add(300);
-        add(400);
-        add(500);
-        add(600);
-        add(700);
-        add(800);
-        add(900);
-        add(1000);
+        for (int i = 0; i < 100000; i++) {
+            add(random.nextInt(100000));
+        }
     }};
 
     @RequestMapping("/plot")
@@ -52,8 +41,8 @@ public class PlotController {
         index++;
         log.info("plotting {} time...", index);
         return new Plots() {{
-            setXAxis(xList.subList(index, index + 5));
-            setYAxis(yList.subList(index, index + 5));
+            setXAxis(xList.subList(index, index + 1500));
+            setYAxis(yList.subList(index, index + 1500));
         }};
     }
 }
